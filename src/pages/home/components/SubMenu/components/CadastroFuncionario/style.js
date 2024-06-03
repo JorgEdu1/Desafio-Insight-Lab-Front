@@ -3,7 +3,7 @@ import styled from 'styled-components'
 export const Button = styled.div`
   background-color: ${({ theme }) => theme.Colors.BACKGROUND};
   border: 1px solid ${({ theme }) => theme.Colors.OUTLINE};
-  color: #fff;
+  color: ${({ theme }) => theme.Colors.TEXT};
   padding: 10px;
   border-radius: 5px;
   cursor: pointer;
@@ -15,16 +15,60 @@ export const Button = styled.div`
 `
 
 export const Content = styled.div`
-  display: inline-flex;
-  padding: 1.25rem 3.75rem 2.5rem 3.75rem;
+  display: flex;
+  border: 1px solid ${({ theme }) => theme.Colors.OUTLINE};
+  padding: 2rem;
   flex-direction: column;
-  align-items: flex-end;
   border-radius: 0.625rem;
   box-shadow: 0px 4px 200px rgba(0, 0, 0, 0.1);
-  background-color: white;
+  background-color: ${({ theme }) => theme.Colors.BACKGROUND};
+  color: ${({ theme }) => theme.Colors.TEXT};
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 1;
+`
+
+export const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`
+
+export const Title = styled.h1`
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+`
+
+export const ContainerForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`
+
+export const SectionForm = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+`
+
+export const Input = styled.input`
+  border: 1px solid ${({ theme }) => theme.Colors.OUTLINE};
+  background-color: ${({ theme }) => theme.Colors.BACKGROUND};
+  color: ${({ theme }) => theme.Colors.TEXT};
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+`
+
+export const SectionButton = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 10px;
 `
