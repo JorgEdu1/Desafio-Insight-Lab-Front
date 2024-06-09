@@ -12,9 +12,9 @@ const DOverlay = styled(D.Overlay)`
   z-index: 1000;
 `
 
-const Dialog = ({ content }) => {
+const Dialog = ({ content, open, setOpen }) => {
   return (
-    <D.Root>
+    <D.Root open={open} onOpenChange={setOpen}>
       <D.Trigger>{content.Trigger}</D.Trigger>
       <DOverlay>
         <D.Content>{content.Content}</D.Content>

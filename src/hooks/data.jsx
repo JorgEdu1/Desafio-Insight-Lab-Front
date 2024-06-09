@@ -7,32 +7,59 @@ const dataContext = createContext()
 export function DataProvider({ children }) {
   const [fornecedores, setFornecedores] = useState([])
 
-  const fetchData = async (object) => {
+  const fetchData = async () => {
     const data = await DataService.findAllData()
     setFornecedores(data)
   }
 
-  const storeData = async (data, object) => {
-    const res = await DataService.storeData(data)
-    if (res.status === 201) {
-      fetchData(object)
-    }
+  const getFornecedor = async (id) => {
+    const data = await DataService.findDataById(id)
+    return data
   }
 
-  const removeData = async (id, object) => {
-    const res = await DataService.removeData(id)
+  const storeData = async (data) => {
+    const res = await DataService.storeData(data)
 
     if (res.status === 201) {
-      fetchData(object)
+      setFornecedores([...fornecedores, res.data])
     }
+
+    return res
+  }
+
+  const updateData = async (id, data) => {
+    const res = await DataService.updateData(id, data)
+
+    if (res.status === 200) {
+      setFornecedores(
+        fornecedores.map((fornecedor) =>
+          fornecedor.id === data.id ? { ...fornecedor, ...data } : fornecedor,
+        ),
+      )
+    }
+
+    return res
+  }
+
+  const removeData = async (id) => {
+    const res = await DataService.removeData(id)
+
+    if (res.status === 204) {
+      setFornecedores(fornecedores.filter((fornecedor) => fornecedor.id !== id))
+    }
+
+    return res
   }
 
   return (
     <dataContext.Provider
       value={{
         fornecedores,
+        fetchData,
         storeData,
         removeData,
+        getFornecedor,
+        updateData,
       }}
     >
       {children}

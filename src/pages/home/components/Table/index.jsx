@@ -5,10 +5,12 @@ import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import styled from 'styled-components'
-import React from 'react'
+import React, { useEffect } from 'react'
 import Paper from '@mui/material/Paper'
 import VerFornecedor from './components/VerFornecedor'
 import EditarFornecedor from './components/EditarFornecedor'
+import DeletarFornecedor from './components/DeletarFornecedor'
+import { useData } from '../../../../hooks/data'
 
 import { ContainerActions } from './style'
 
@@ -46,29 +48,13 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }))
 
-function createData(nome, telefone, email, contatoPrincipal) {
-  return { nome, telefone, email, contatoPrincipal }
-}
-
-const rows = [
-  /* 	{
-		"id": 1,
-		"nome": "teste insomnia",
-		"cnpj": "34.567.890/0001-00",
-		"endereco": "Rua A, 123, Bairro A, Cidade A",
-		"telefone": "(11) 1234-5678",
-		"email": "contato@fornecedora.com",
-		"contatoPrincipal": "Jorge Eduardo"
-	}, */
-  createData(
-    'teste insomnia',
-    '(11) 1234-5678',
-    'contato@fornecedora.com',
-    'Jorge Eduardo',
-  ),
-]
-
 export default function CustomizedTables() {
+  const { fornecedores, fetchData } = useData()
+
+  useEffect(() => {
+    fetchData()
+  }, [fetchData])
+
   return (
     <TableContainer component={Paper}>
       <StyledTable sx={{ minWidth: 700 }} aria-label="customized table">
@@ -82,8 +68,8 @@ export default function CustomizedTables() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <StyledTableRow key={row.nome}>
+          {fornecedores.map((row) => (
+            <StyledTableRow key={row.id}>
               <StyledTableCell component="th" scope="row">
                 {row.nome}
               </StyledTableCell>
@@ -94,8 +80,9 @@ export default function CustomizedTables() {
               </StyledTableCell>
               <StyledTableCell align="left">
                 <ContainerActions>
-                  <VerFornecedor id={1} />
-                  <EditarFornecedor id={1} />
+                  <VerFornecedor id={row.id} />
+                  <EditarFornecedor id={row.id} />
+                  <DeletarFornecedor id={row.id} />
                 </ContainerActions>
               </StyledTableCell>
             </StyledTableRow>

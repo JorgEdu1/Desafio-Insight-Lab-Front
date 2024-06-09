@@ -1,20 +1,6 @@
 import styled from 'styled-components'
 import { InputMask } from '@react-input/mask'
 
-export const Button = styled.div`
-  background-color: ${({ theme }) => theme.Colors.BACKGROUND};
-  border: 1px solid ${({ theme }) => theme.Colors.OUTLINE};
-  color: ${({ theme }) => theme.Colors.TEXT};
-  padding: 10px;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: 0.2s ease-in-out all;
-  &:hover {
-    background-color: ${({ theme }) => theme.Colors.OUTLINE};
-    color: ${({ theme }) => theme.Colors.ON_PRIMARY};
-  }
-`
-
 export const Content = styled.div`
   display: flex;
   border: 1px solid ${({ theme }) => theme.Colors.OUTLINE};
@@ -91,12 +77,6 @@ export const ActionButton = styled.button`
     background-color: ${({ theme }) => theme.Colors.OUTLINE};
     color: ${({ theme }) => theme.Colors.ON_PRIMARY};
   }
-`
-
-export const ErrorSpan = styled.span`
-  color: red;
-  font-size: 10px;
-  margin-left: 5px;
 `
 
 export const InputSection = styled.div`

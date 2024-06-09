@@ -17,9 +17,9 @@ export class DataService {
     }
   }
 
-  static async updateData(data) {
+  static async updateData(id, data) {
     try {
-      return await DataApi.updateData(data)
+      return await DataApi.updateData(id, data)
     } catch (error) {
       console.error(error)
     }
@@ -30,6 +30,7 @@ export class DataService {
       return await DataApi.storeData(data)
     } catch (error) {
       console.error(error)
+      return error.response
     }
   }
 

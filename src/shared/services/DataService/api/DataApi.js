@@ -19,10 +19,10 @@ export class DataApi {
     }
   }
 
-  static async updateData(data) {
+  static async updateData(id, data) {
     try {
-      const response = await api.put(`/fornecedor/${data.id}`, data)
-      return response.data
+      const response = await api.put(`/fornecedor/${id}`, data)
+      return response
     } catch (error) {
       console.error(error)
     }
@@ -31,16 +31,18 @@ export class DataApi {
   static async storeData(data) {
     try {
       const response = await api.post('/fornecedor', data)
-      return response.data
+      return response
     } catch (error) {
       console.error(error)
+      return error.response
     }
   }
 
   static async removeData(id) {
     try {
       const response = await api.delete(`/fornecedor/${id}`)
-      return response.data
+      console.log(response)
+      return response
     } catch (error) {
       console.error(error)
     }
