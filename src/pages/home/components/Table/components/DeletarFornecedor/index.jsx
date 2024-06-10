@@ -17,22 +17,25 @@ const VerFornecedor = ({ id, name }) => {
   const { addToast } = useToast()
   const [open, setOpen] = React.useState(false)
 
-  const handleSubmit = async () => {
-    const res = await removeData(id)
+  const handleSubmit = async (event) => {
+    event.preventDefault()
+    const resFunc = await removeData(id)
+    const res = await resFunc(id)
 
     if (res.status === 204) {
       addToast({
-        type: 'sucess',
+        type: 'success',
         title: 'Sucesso:',
-        description: 'Funcionário deletado com sucesso!',
+        description: 'Fornecedor deletado com sucesso!',
       })
     } else {
       addToast({
         type: 'error',
         title: 'Erro:',
-        description: 'Não foi possivel deletar!',
+        description: 'Não foi possível deletar!',
       })
     }
+    setOpen(false)
   }
 
   return (

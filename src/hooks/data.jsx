@@ -21,7 +21,7 @@ export function DataProvider({ children }) {
     const res = await DataService.storeData(data)
 
     if (res.status === 201) {
-      setFornecedores([...fornecedores, res.data])
+      setFornecedores([res.data, ...fornecedores])
     }
 
     return res
@@ -33,7 +33,9 @@ export function DataProvider({ children }) {
     if (res.status === 200) {
       setFornecedores(
         fornecedores.map((fornecedor) =>
-          fornecedor.id === data.id ? { ...fornecedor, ...data } : fornecedor,
+          fornecedor.id === res.data.id
+            ? { ...fornecedor, ...data }
+            : fornecedor,
         ),
       )
     }
@@ -41,14 +43,20 @@ export function DataProvider({ children }) {
     return res
   }
 
-  const removeData = async (id) => {
-    const res = await DataService.removeData(id)
+  const removeData = () => {
+    const remove = async (id) => {
+      const res = await DataService.removeData(id)
 
-    if (res.status === 204) {
-      setFornecedores(fornecedores.filter((fornecedor) => fornecedor.id !== id))
+      if (res.status === 204) {
+        setFornecedores(
+          fornecedores.filter((fornecedor) => fornecedor.id !== id),
+        )
+      }
+
+      return res
     }
 
-    return res
+    return remove
   }
 
   return (

@@ -41,7 +41,6 @@ export class DataApi {
   static async removeData(id) {
     try {
       const response = await api.delete(`/fornecedor/${id}`)
-      console.log(response)
       return response
     } catch (error) {
       console.error(error)

@@ -20,7 +20,7 @@ import {
 } from './style'
 import Dialog from '../../../../../../generics/Dialog'
 
-const CadastroFuncionario = () => {
+const CadastroFornecedor = () => {
   const [open, setOpen] = React.useState(false)
   const { storeData } = useData()
   const { addToast } = useToast()
@@ -70,11 +70,11 @@ const CadastroFuncionario = () => {
   return (
     <Dialog
       content={{
-        Trigger: <Button>Cadastrar Funcionário</Button>,
+        Trigger: <Button>Cadastrar Fornecedor</Button>,
         Content: (
           <Content>
             <Container>
-              <Title>Cadastro de Funcionário</Title>
+              <Title>Cadastro de Fornecedor</Title>
               <form onSubmit={handleSubmit(onSubmit)}>
                 <ContainerForm>
                   <SectionForm>
@@ -159,4 +159,4 @@ const CadastroFuncionario = () => {
   )
 }
 
-export default CadastroFuncionario
+export default CadastroFornecedor

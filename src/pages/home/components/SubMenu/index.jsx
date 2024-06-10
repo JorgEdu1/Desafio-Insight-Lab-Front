@@ -1,11 +1,11 @@
 import React from 'react'
-import CadastroFuncionario from './components/CadastroFuncionario'
+import CadastroFornecedor from './components/CadastroFornecedor'
 import { Container } from './style'
 
 const SubMenu = () => {
   return (
     <Container>
-      <CadastroFuncionario />
+      <CadastroFornecedor />
     </Container>
   )
 }

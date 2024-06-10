@@ -5,12 +5,13 @@ import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import styled from 'styled-components'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Paper from '@mui/material/Paper'
 import VerFornecedor from './components/VerFornecedor'
 import EditarFornecedor from './components/EditarFornecedor'
 import DeletarFornecedor from './components/DeletarFornecedor'
 import { useData } from '../../../../hooks/data'
+import LoadingComponent from '../../../../shared/components/LoadingComponent'
 
 import { ContainerActions } from './style'
 
@@ -36,6 +37,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.Colors.BACKGROUND,
     color: theme.Colors.TEXT,
+    cursor: 'pointer',
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
@@ -50,25 +52,72 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 export default function CustomizedTables() {
   const { fornecedores, fetchData } = useData()
+  const [order, setOrder] = useState('asc')
+  const [orderBy, setOrderBy] = useState('nome')
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    fetchData()
-  }, [fetchData])
+    const fetchDataWithLoading = async () => {
+      setIsLoading(true)
+      await fetchData()
+      setIsLoading(false)
+    }
+
+    fetchDataWithLoading()
+    // eslint-disable-next-line
+  }, [])
+
+  const handleRequestSort = (property) => {
+    const isAsc = orderBy === property && order === 'asc'
+    setOrder(isAsc ? 'desc' : 'asc')
+    setOrderBy(property)
+  }
+
+  const sortedRows = [...fornecedores].sort((a, b) => {
+    if (a[orderBy] < b[orderBy]) {
+      return order === 'asc' ? -1 : 1
+    }
+    if (a[orderBy] > b[orderBy]) {
+      return order === 'asc' ? 1 : -1
+    }
+    return 0
+  })
+
+  if (isLoading) {
+    return <LoadingComponent />
+  }
 
   return (
     <TableContainer component={Paper}>
       <StyledTable sx={{ minWidth: 700 }} aria-label="customized table">
         <TableHead>
           <TableRow>
-            <StyledTableCell>Nome</StyledTableCell>
-            <StyledTableCell align="left">Telefone</StyledTableCell>
-            <StyledTableCell align="left">Email</StyledTableCell>
-            <StyledTableCell align="left">Contato Principal</StyledTableCell>
+            <StyledTableCell onClick={() => handleRequestSort('nome')}>
+              Nome
+            </StyledTableCell>
+            <StyledTableCell
+              align="left"
+              onClick={() => handleRequestSort('telefone')}
+            >
+              Telefone
+            </StyledTableCell>
+            <StyledTableCell
+              align="left"
+              onClick={() => handleRequestSort('email')}
+            >
+              Email
+            </StyledTableCell>
+            <StyledTableCell
+              align="left"
+              onClick={() => handleRequestSort('contatoPrincipal')}
+            >
+              Contato Principal
+            </StyledTableCell>
             <StyledTableCell align="left">Ações</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {fornecedores.map((row) => (
+          {sortedRows.map((row) => (
             <StyledTableRow key={row.id}>
               <StyledTableCell component="th" scope="row">
                 {row.nome}
@@ -82,7 +131,7 @@ export default function CustomizedTables() {
                 <ContainerActions>
                   <VerFornecedor id={row.id} />
                   <EditarFornecedor id={row.id} />
-                  <DeletarFornecedor id={row.id} />
+                  <DeletarFornecedor id={row.id} name={row.nome} />
                 </ContainerActions>
               </StyledTableCell>
             </StyledTableRow>

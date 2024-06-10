@@ -54,6 +54,7 @@ const VerFornecedor = ({ id }) => {
       }
       fetchData()
     }
+    // eslint-disable-next-line
   }, [open, id])
 
   const onSubmit = async (data) => {
@@ -62,13 +63,13 @@ const VerFornecedor = ({ id }) => {
       addToast({
         type: 'success',
         title: 'Sucesso:',
-        description: 'Funcionário atualizado com sucesso!',
+        description: 'Fornecedor atualizado com sucesso!',
       })
     } else {
       addToast({
         type: 'error',
         title: 'Erro:',
-        description: 'Erro ao atualizar o funcionário!',
+        description: 'Erro ao atualizar o fornecedor!',
       })
     }
     setOpen(false)
@@ -81,7 +82,7 @@ const VerFornecedor = ({ id }) => {
         Content: (
           <Content>
             <Container>
-              <Title>Editar Funcionário</Title>
+              <Title>Editar Fornecedor</Title>
               {loading ? (
                 <LoadingComponent />
               ) : (

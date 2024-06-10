@@ -48,7 +48,7 @@ const VerFornecedor = ({ id }) => {
         Content: (
           <Content>
             <Container>
-              <Title>Detalhes do Funcionário</Title>
+              <Title>Detalhes do Fornecedor</Title>
               {loading ? (
                 <LoadingComponent />
               ) : (
